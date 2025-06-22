@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { signUpSchema } from "@/schemas/signUpSchema";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { useDebounceCallback } from "usehooks-ts";
@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Loader2 } from "lucide-react";
+import { useUsernameCheck } from "@/hooks/queries/useUsernameCheck";
 
 const page = () => {
   const [username, setUsername] = useState("");
@@ -27,8 +28,10 @@ const page = () => {
   const [isCheckingUsername, setIsCheckingUsername] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const debounced = useDebounceCallback(setUsername, 300);
+  const debounced = useDebounceCallback(setUsername, 700);
   const router = useRouter();
+
+  const { data, error: queryError, isFetching } = useUsernameCheck(username);
 
   //zod implementation
   const form = useForm<z.infer<typeof signUpSchema>>({
@@ -40,34 +43,10 @@ const page = () => {
     },
   });
 
-  useEffect(() => {
-    const checkUsernameUniqueness = async () => {
-      if (username) {
-        setUsernameMessage("");
-        setIsCheckingUsername(true);
-        try {
-          const response = await axios.get(
-            `/api/username-check?username=${username}`
-          );
-          setUsernameMessage(response.data.message);
-        } catch (error) {
-          const axiosError = error as AxiosError<ApiResponse>;
-          setUsernameMessage(
-            axiosError.response?.data.message ?? "Error checking username"
-          );
-          console.log("Error checking username", error);
-        } finally {
-          setIsCheckingUsername(false);
-        }
-      }
-    };
-    checkUsernameUniqueness();
-  }, [username]);
-
   const onSubmit = async (data: z.infer<typeof signUpSchema>) => {
     setIsSubmitting(true);
     console.log("Data", data);
-    console.log("Form", form)
+    console.log("Form", form);
 
     try {
       const response = await axios.post("/api/sign-up", data);
@@ -88,6 +67,7 @@ const page = () => {
     }
   };
 
+
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
@@ -98,7 +78,10 @@ const page = () => {
           <p className="mb-4">Sign up to start your anonymous adventure</p>
         </div>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 flex flex-col">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-6 flex flex-col"
+          >
             <FormField
               control={form.control}
               name="username"
@@ -115,20 +98,23 @@ const page = () => {
                       }}
                     />
                   </FormControl>
-                  {isCheckingUsername && (
+                  {isFetching && (
                     <>
                       <Loader2 className="animate-spin" />
                     </>
                   )}
-                  {username && (
-                    <FormMessage
-                      className={
-                        usernameMessage === "Username available"
-                          ? "text-green-600"
-                          : "text-red-500"
+                  {data?.message && (
+                    <FormMessage className="text-green-600">
+                      {data?.message}
+                    </FormMessage>
+                  )}
+                  {(queryError as AxiosError<ApiResponse>)?.response?.data
+                    .message && (
+                    <FormMessage className="text-red-500">
+                      {
+                        (queryError as AxiosError<ApiResponse>)?.response?.data
+                          .message
                       }
-                    >
-                      {usernameMessage && usernameMessage}
                     </FormMessage>
                   )}
                 </FormItem>

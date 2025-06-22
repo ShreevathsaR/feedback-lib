@@ -50,7 +50,17 @@ export async function POST(req: NextRequest) {
           success: false,
           message: "User not found",
         },
-        { status: 400 }
+        { status: 404 }
+      );
+    }
+
+    if (user.isVerified) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "User already verified",
+        },
+        { status: 403 }
       );
     }
 

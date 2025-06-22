@@ -48,6 +48,7 @@ export async function POST(request: NextRequest) {
         const verifyCodeExpiry = new Date();
         verifyCodeExpiry.setHours(verifyCodeExpiry.getHours() + 1);
 
+        userVerificationUsingEmail.username = username
         userVerificationUsingEmail.password = hashedPassword;
         userVerificationUsingEmail.verifyCode = verifyCode;
         userVerificationUsingEmail.verifyCodeExpiry = verifyCodeExpiry;
