@@ -1,11 +1,23 @@
-import { Font, Head, Heading, Html, Preview, Row, Section, Text } from "@react-email/components";
+import {
+  Font,
+  Head,
+  Heading,
+  Html,
+  Preview,
+  render,
+  Row,
+  Section,
+  Text,
+} from "@react-email/components";
 
 interface VerificationEmailProps {
   username: string;
   otp: string;
 }
 
-export default function VerificationEmail({ username, otp }: VerificationEmailProps) {
+function VerificationEmail(props: VerificationEmailProps) {
+  const { username, otp } = props;
+
   return (
     <Html lang="en" dir="ltr">
       <Head>
@@ -14,8 +26,8 @@ export default function VerificationEmail({ username, otp }: VerificationEmailPr
           fontFamily="Roboto"
           fallbackFontFamily="Verdana"
           webFont={{
-            url: 'https://fonts.gstatic.com/s/roboto/v27/KFOmCnqEu92Fr1Mu4mxKKTU1Kg.woff2',
-            format: 'woff2',
+            url: "https://fonts.gstatic.com/s/roboto/v27/KFOmCnqEu92Fr1Mu4mxKKTU1Kg.woff2",
+            format: "woff2",
           }}
           fontWeight={400}
           fontStyle="normal"
@@ -33,22 +45,20 @@ export default function VerificationEmail({ username, otp }: VerificationEmailPr
           </Text>
         </Row>
         <Row>
-          <Text>{otp}</Text> 
+          <Text>{otp}</Text>
         </Row>
         <Row>
           <Text>
             If you did not request this code, please ignore this email.
           </Text>
         </Row>
-        {/* <Row>
-          <Button
-            href={`http://localhost:3000/verify/${username}`}
-            style={{ color: '#61dafb' }}
-          >
-            Verify here
-          </Button>
-        </Row> */}
       </Section>
     </Html>
   );
+}
+
+export const emailHtml = async (props: {username: string, otp: string}) => {
+  console.log(`Creating template for ${props.username} with ${props.otp}`)
+  const html = await render(<VerificationEmail username={props.username} otp={props.otp}/>)
+  return html
 }

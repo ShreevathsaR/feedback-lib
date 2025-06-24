@@ -56,7 +56,6 @@ const page = () => {
       router.replace(`/verify/${username}`);
       setIsSubmitting(false);
     } catch (error) {
-      console.error("Error in signup of user", error);
       const axiosError = error as AxiosError<ApiResponse>;
       let errorMessage =
         axiosError.response?.data.message ?? "Error signing up";
@@ -73,7 +72,7 @@ const page = () => {
       <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
         <div className="text-center">
           <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6">
-            Join Mystery Message
+            Join Feedback Lib
           </h1>
           <p className="mb-4">Sign up to start your anonymous adventure</p>
         </div>

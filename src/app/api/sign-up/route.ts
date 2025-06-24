@@ -14,7 +14,6 @@ export async function POST(request: NextRequest) {
     //check for unique username
     const userVerificationUsingName = await UserModel.findOne({
       username,
-      isVerified: true,
     });
 
     if (userVerificationUsingName) {

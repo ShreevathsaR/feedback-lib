@@ -5,7 +5,6 @@ import { authOptions } from "../auth/[...nextauth]/auth";
 import { responseObject } from "@/lib/responseObject";
 import mongoose from "mongoose";
 import UserModel from "@/model/User";
-import { signIn } from "next-auth/react";
 
 export async function GET(req: NextRequest){
     await dbConnect();
@@ -27,7 +26,7 @@ export async function GET(req: NextRequest){
         ])
 
         if(!user || user.length === 0){
-            return responseObject(false, "User not found", 404)
+            return responseObject(false, "Messages not found", 404)
         }
         console.log(user[0].messages)
         return responseObject(true, "Messages retrieved", 200, null , user[0].messages)

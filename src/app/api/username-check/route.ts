@@ -20,7 +20,7 @@ export async function GET(req: NextRequest) {
       }, { status: 400 });
     }
 
-    const userExists = await UserModel.findOne({ username, isVerified: true });
+    const userExists = await UserModel.findOne({ username });
 
     if (userExists) {
       return NextResponse.json({
