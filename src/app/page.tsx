@@ -1,6 +1,6 @@
 // Minimal forward wrapper
-import Home from "./(app)/page";
+import Home1 from "./(app)/page";
 
-export default function RootPage() {
-  return <Home />;
+export default function Home() {
+  return <Home1 />;
 }

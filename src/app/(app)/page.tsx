@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/carousel";
 import { useSession } from "next-auth/react";
 
-export default function Home() {
+export default function Home1() {
   const session = useSession();
 
   return (
