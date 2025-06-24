@@ -1,9 +1,7 @@
 "use client";
-
-import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, LogIn, Mail, User } from "lucide-react"; // Assuming you have an icon for messages
+import { ArrowRight, LogIn, Mail, User } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Autoplay from "embla-carousel-autoplay";
 import messages from "@/messages.json";

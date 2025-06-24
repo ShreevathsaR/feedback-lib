@@ -1,12 +1,12 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
 import dbConnect from "@/lib/dbConnect";
 import { responseObject } from "@/lib/responseObject";
-import UserModel, { User } from "@/model/User";
+import UserModel from "@/model/User";
 import mongoose from "mongoose";
 import { getServerSession } from "next-auth/next";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(req: NextRequest, res: NextResponse) {
+export async function POST(req: NextRequest) {
   await dbConnect();
   const session = await getServerSession(authOptions); //session will only be retrieved only if this request was made from the same domain where the user logs in
 
@@ -56,7 +56,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
   }
 }
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   await dbConnect();
   const session = await getServerSession(authOptions); //session will only be retrieved only if this request was made from the same domain where the user logs in
 

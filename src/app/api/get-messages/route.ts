@@ -1,12 +1,11 @@
 import dbConnect from "@/lib/dbConnect";
 import { getServerSession } from "next-auth";
-import { NextRequest } from "next/server";
 import { authOptions } from "../auth/[...nextauth]/auth";
 import { responseObject } from "@/lib/responseObject";
 import mongoose from "mongoose";
 import UserModel from "@/model/User";
 
-export async function GET(req: NextRequest){
+export async function GET(){
     await dbConnect();
 
     const session = await getServerSession(authOptions)

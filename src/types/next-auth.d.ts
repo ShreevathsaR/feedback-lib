@@ -2,7 +2,7 @@
 // adding just user: {...} will overwrite the default values of the session
 // so we add the default session values back in the type
 
-import NextAuth, { DefaultSession } from "next-auth";
+import { DefaultSession } from "next-auth";
 
 declare module "next-auth" {
   interface Session {

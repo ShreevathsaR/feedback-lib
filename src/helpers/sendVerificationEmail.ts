@@ -34,7 +34,7 @@ const sendVerificationEmail = async (
       message: "Verification email sent successfully",
     };
   } catch (error) {
-    console.error("Error sending verification email");
+    console.error("Error sending verification email", error);
     return {
       success: false,
       message: "Error sending verification email",

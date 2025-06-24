@@ -22,10 +22,8 @@ import { Input } from "@/components/ui/input";
 import { Loader2 } from "lucide-react";
 import { useUsernameCheck } from "@/hooks/queries/useUsernameCheck";
 
-const page = () => {
+const Page = () => {
   const [username, setUsername] = useState("");
-  const [usernameMessage, setUsernameMessage] = useState("");
-  const [isCheckingUsername, setIsCheckingUsername] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const debounced = useDebounceCallback(setUsername, 700);
@@ -57,7 +55,7 @@ const page = () => {
       setIsSubmitting(false);
     } catch (error) {
       const axiosError = error as AxiosError<ApiResponse>;
-      let errorMessage =
+      const errorMessage =
         axiosError.response?.data.message ?? "Error signing up";
       toast.error("Signup failed", {
         description: errorMessage,
@@ -167,4 +165,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

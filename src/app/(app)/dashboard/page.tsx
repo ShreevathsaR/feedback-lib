@@ -12,12 +12,12 @@ import { acceptMessageSchema } from "@/schemas/acceptMessageSchema";
 import axios, { AxiosError } from "axios";
 import { ApiResponse } from "@/types/apiResponse";
 import { toast } from "sonner";
-import { Loader2, RefreshCcw, SeparatorHorizontal } from "lucide-react";
+import { Loader2, RefreshCcw } from "lucide-react";
 import { Separator } from "@radix-ui/react-separator";
 import { Switch } from "@/components/ui/switch";
 import { Input } from "@/components/ui/input";
 
-const page = () => {
+const Page = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isSwitchLoading, setIsSwitchLoading] = useState(false);
@@ -193,4 +193,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

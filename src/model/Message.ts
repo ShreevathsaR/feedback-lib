@@ -1,4 +1,4 @@
-import mongoose, {Schema, Document, Model, ObjectId} from "mongoose";
+import mongoose, {Schema, Document, Model} from "mongoose";
 
 export interface Message extends Document{
     _id: any; 
